@@ -57,7 +57,7 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   try {
     const tagData = await Tag.destroy({
-      wherer: {
+      where: {
         id: req.params.id,
       },
     });

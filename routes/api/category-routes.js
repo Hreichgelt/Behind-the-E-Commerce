@@ -1,23 +1,39 @@
-const router = require('express').Router();
-const { restoreDefaultPrompts } = require('inquirer');
-const { Category, Product } = require('../../models');
+const router = require("express").Router();
+const { restoreDefaultPrompts } = require("inquirer");
+const { Category, Product } = require("../../models");
 
 // The `/api/categories` endpoint
-  // find all categories
-  // be sure to include its associated Products
-router.get('/', (req, res) => {
+// find all categories
+// be sure to include its associated Products
+router.get("/", async (req, res) => {
   try {
-    const catData = await Category.findall();
+    const catData = await Category.findall({
+      attributes: ["id", "category_name"],
+      include: [
+        {
+          model: Product,
+          attributes: ["id", "product_name", "price", "stock", "category_id"],
+        },
+      ],
+    });
     restoreDefaultPrompts.status(200).json(catData);
   } catch (err) {
     res.status(500).json(err);
   }
 });
-  // find one category by its `id` value
-  // be sure to include its associated Products
-router.get('/:id', (req, res) => {
+// find one category by its `id` value
+// be sure to include its associated Products
+router.get("/:id", async (req, res) => {
   try {
-    const catData = await Category.findByPk(req.params.id);
+    const catData = await Category.findByPk(req.params.id, {
+      attributes: ["id", "category_name"],
+      include: [
+        {
+          model: Product,
+          attributes: ["id", "product_name", "price", "stock", "category_id"],
+        },
+      ],
+    });
     if (!catData) {
       res.status(404).json({ message: "No category with this id!" });
       return;
@@ -27,8 +43,8 @@ router.get('/:id', (req, res) => {
     res.status(500).json(err);
   }
 });
-  // create a new category
-router.post('/', (req, res) => {
+// create a new category
+router.post("/", async (req, res) => {
   try {
     const catData = await Category.create(req.body);
     res.status(200).json(catData);
@@ -36,8 +52,8 @@ router.post('/', (req, res) => {
     res.status(400).json(err);
   }
 });
-  // update a category by its `id` value
-router.put('/:id', (req, res) => {
+// update a category by its `id` value
+router.put("/:id", async (req, res) => {
   try {
     const catData = await Category.update(req.body, {
       where: {
@@ -45,7 +61,7 @@ router.put('/:id', (req, res) => {
       },
     });
     if (!catData[0]) {
-      res.status(404).json({ message: 'No Category with this id!' });
+      res.status(404).json({ message: "No Category with this id!" });
       return;
     }
     res.status(200).json(catData);
@@ -53,8 +69,8 @@ router.put('/:id', (req, res) => {
     res.status(500).json(err);
   }
 });
-  // delete a category by its `id` value
-router.delete('/:id', (req, res) => {
+// delete a category by its `id` value
+router.delete("/:id", async (req, res) => {
   try {
     const catData = await Category.destroy({
       where: {
@@ -62,7 +78,7 @@ router.delete('/:id', (req, res) => {
       },
     });
     if (!catData) {
-      res.status(404).json({ message: 'No category with this id!' });
+      res.status(404).json({ message: "No category with this id!" });
       return;
     }
     res.status(200).json(catData);

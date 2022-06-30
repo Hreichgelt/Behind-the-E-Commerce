@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { restoreDefaultPrompts } = require("inquirer");
 const { Category, Product } = require("../../models");
 
 // The `/api/categories` endpoint
@@ -7,7 +6,7 @@ const { Category, Product } = require("../../models");
 // be sure to include its associated Products
 router.get("/", async (req, res) => {
   try {
-    const catData = await Category.findall({
+    const catData = await Category.findAll({
       attributes: ["id", "category_name"],
       include: [
         {
@@ -16,7 +15,7 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-    restoreDefaultPrompts.status(200).json(catData);
+    res.status(200).json(catData);
   } catch (err) {
     res.status(500).json(err);
   }

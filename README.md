@@ -14,7 +14,7 @@
 
 ## DESCRIPTION
 
-a back end for my e-commerce website that uses the latest technologies
+A back end for my e-commerce website that uses the latest technologies
 
 # USAGE
 

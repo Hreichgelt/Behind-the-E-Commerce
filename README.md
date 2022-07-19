@@ -14,7 +14,7 @@
 
 ## DESCRIPTION
 
-a back end for my e-commerce website that uses the latest technologies
+A back end e-commerce website that uses the latest technologies. This application utilizes Express.js, Dotenv, Sequelize, and MySQL.
 
 # USAGE
 
@@ -34,7 +34,10 @@ THEN I am able to successfully create, update, and delete data in my database
 
 [Demo video](https://drive.google.com/file/d/15o3RVKhlkPAVajLFcPkwETyRfJCuPnsr/view)
 
-## AUTHORS AND ACKNOWLEDGMENTS
+![All Products](./assets/images/allproducts.png)
+
+![Create Product](./assets/images/createproduct.png)
+
 
 ## RESOURCES
 
